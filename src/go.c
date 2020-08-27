@@ -210,14 +210,14 @@ void print_board(float *board, int swap, int *indexes)
     //FILE *stream = stdout;
     FILE *stream = stderr;
     int i,j,n;
-    fprintf(stream, "\n\n");
-    fprintf(stream, "   ");
-    for(i = 0; i < 19; ++i){
-        fprintf(stream, "%c ", 'A' + i + 1*(i > 7 && noi));
-    }
-    fprintf(stream, "\n");
+    // fprintf(stream, "\n\n");
+    // fprintf(stream, "   ");
+    // for(i = 0; i < 19; ++i){
+    //     fprintf(stream, "%c ", 'A' + i + 1*(i > 7 && noi));
+    // }
+    // fprintf(stream, "\n");
     for(j = 0; j < 19; ++j){
-        fprintf(stream, "%2d", (inverted) ? 19-j : j+1);
+        // fprintf(stream, "%2d", (inverted) ? 19-j : j+1);
         for(i = 0; i < 19; ++i){
             int index = j*19 + i;
             if(indexes){
@@ -232,22 +232,22 @@ void print_board(float *board, int swap, int *indexes)
                         else if(n == 3) fprintf(stream, "\uff14");
                         else if(n == 4) fprintf(stream, "\uff15");
                         */
-                        if(n == 0) fprintf(stream, " 1");
-                        else if(n == 1) fprintf(stream, " 2");
-                        else if(n == 2) fprintf(stream, " 3");
-                        else if(n == 3) fprintf(stream, " 4");
-                        else if(n == 4) fprintf(stream, " 5");
+                        // if(n == 0) fprintf(stream, " 1");
+                        // else if(n == 1) fprintf(stream, " 2");
+                        // else if(n == 2) fprintf(stream, " 3");
+                        // else if(n == 3) fprintf(stream, " 4");
+                        // else if(n == 4) fprintf(stream, " 5");
                     }
                 }
                 if(found) continue;
             }
             //if(board[index]*-swap > 0) fprintf(stream, "\u25C9 ");
             //else if(board[index]*-swap < 0) fprintf(stream, "\u25EF ");
-            if(board[index]*-swap > 0) fprintf(stream, " O");
-            else if(board[index]*-swap < 0) fprintf(stream, " X");
-            else fprintf(stream, "  ");
+            // if(board[index]*-swap > 0) fprintf(stream, " O");
+            // else if(board[index]*-swap < 0) fprintf(stream, " X");
+            // else fprintf(stream, "  ");
         }
-        fprintf(stream, "\n");
+        // fprintf(stream, "\n");
     }
 }
 
@@ -521,7 +521,7 @@ void engine_go(char *filename, char *weightfile, int multi)
             if(c >= 'a' && c <= 'z') c = c - 'a';
             if(c >= 8) --c;
             r = 19 - r;
-            fprintf(stderr, "move: %d %d\n", r, c);
+            // fprintf(stderr, "move: %d %d\n", r, c);
 
             char *swap = two;
             two = one;
@@ -561,23 +561,23 @@ void engine_go(char *filename, char *weightfile, int multi)
         } else if (!strcmp(buff, "final_status_list")){
             char type[256];
             scanf("%s", type);
-            fprintf(stderr, "final_status\n");
+            // fprintf(stderr, "final_status\n");
             char *line = fgetl(stdin);
             free(line);
             if(type[0] == 'd' || type[0] == 'D'){
                 FILE *f = fopen("game.txt", "w");
                 int i, j;
                 int count = 2;
-                fprintf(f, "boardsize 19\n");
-                fprintf(f, "clear_board\n");
+                // fprintf(f, "boardsize 19\n");
+                // fprintf(f, "clear_board\n");
                 for(j = 0; j < 19; ++j){
                     for(i = 0; i < 19; ++i){
-                        if(board[j*19 + i] == 1) fprintf(f, "play black %c%d\n", 'A'+i+(i>=8), 19-j);
-                        if(board[j*19 + i] == -1) fprintf(f, "play white %c%d\n", 'A'+i+(i>=8), 19-j);
+                        // if(board[j*19 + i] == 1) fprintf(f, "play black %c%d\n", 'A'+i+(i>=8), 19-j);
+                        // if(board[j*19 + i] == -1) fprintf(f, "play white %c%d\n", 'A'+i+(i>=8), 19-j);
                         if(board[j*19 + i]) ++count;
                     }
                 }
-                fprintf(f, "final_status_list dead\n");
+                // fprintf(f, "final_status_list dead\n");
                 fclose(f);
 #ifdef _WIN32
 				FILE *p = _popen("./gnugo --mode gtp < game.txt", "r");
@@ -708,13 +708,13 @@ float score_game(float *board)
     FILE *f = fopen("game.txt", "w");
     int i, j;
     int count = 3;
-    fprintf(f, "komi 6.5\n");
-    fprintf(f, "boardsize 19\n");
-    fprintf(f, "clear_board\n");
+    // fprintf(f, "komi 6.5\n");
+    // fprintf(f, "boardsize 19\n");
+    // fprintf(f, "clear_board\n");
     for(j = 0; j < 19; ++j){
         for(i = 0; i < 19; ++i){
-            if(board[j*19 + i] == 1) fprintf(f, "play black %c%d\n", 'A'+i+(i>=8), 19-j);
-            if(board[j*19 + i] == -1) fprintf(f, "play white %c%d\n", 'A'+i+(i>=8), 19-j);
+            // if(board[j*19 + i] == 1) fprintf(f, "play black %c%d\n", 'A'+i+(i>=8), 19-j);
+            // if(board[j*19 + i] == -1) fprintf(f, "play white %c%d\n", 'A'+i+(i>=8), 19-j);
             if(board[j*19 + i]) ++count;
         }
     }
@@ -733,7 +733,7 @@ float score_game(float *board)
     float score = 0;
     char player = 0;
     while((l = fgetl(p))){
-        fprintf(stderr, "%s  \t", l);
+        // fprintf(stderr, "%s  \t", l);
         int n = sscanf(l, "= %c+%f", &player, &score);
         free(l);
         if (n == 2) break;
@@ -781,7 +781,7 @@ void self_go(char *filename, char *weightfile, char *f2, char *w2, int multi)
             if((score > 0) == (total%2==0)) ++p1;
             else ++p2;
             ++total;
-            fprintf(stderr, "Total: %d, Player 1: %f, Player 2: %f\n", total, (float)p1/total, (float)p2/total);
+            // fprintf(stderr, "Total: %d, Player 1: %f, Player 2: %f\n", total, (float)p1/total, (float)p2/total);
             int j;
             for(; i < count; i += 2){
                 for(j = 0; j < 93; ++j){
@@ -832,7 +832,7 @@ void run_go(int argc, char **argv)
 {
     //boards_go();
     if(argc < 4){
-        fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
+        // fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
         return;
     }
 

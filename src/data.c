@@ -1663,7 +1663,7 @@ void *load_threads(void *ptr)
         threads = (pthread_t*)xcalloc(args.threads, sizeof(pthread_t));
         run_load_data = (volatile int *)xcalloc(args.threads, sizeof(int));
         args_swap = (load_args *)xcalloc(args.threads, sizeof(load_args));
-        fprintf(stderr, " Create %d permanent cpu-threads \n", args.threads);
+        // fprintf(stderr, " Create %d permanent cpu-threads \n", args.threads);
 
         for (i = 0; i < args.threads; ++i) {
             int* ptr = (int*)xcalloc(1, sizeof(int));

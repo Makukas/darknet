@@ -469,8 +469,8 @@ layer parse_yolo(list *options, size_params params)
     else if (strcmp(iou_loss, "diou") == 0) l.iou_loss = DIOU;
     else if (strcmp(iou_loss, "ciou") == 0) l.iou_loss = CIOU;
     else l.iou_loss = IOU;
-    fprintf(stderr, "[yolo] params: iou loss: %s (%d), iou_norm: %2.2f, cls_norm: %2.2f, scale_x_y: %2.2f\n",
-        iou_loss, l.iou_loss, l.iou_normalizer, l.cls_normalizer, l.scale_x_y);
+    // fprintf(stderr, "[yolo] params: iou loss: %s (%d), iou_norm: %2.2f, cls_norm: %2.2f, scale_x_y: %2.2f\n",
+        // iou_loss, l.iou_loss, l.iou_normalizer, l.cls_normalizer, l.scale_x_y);
 
     char *iou_thresh_kind_str = option_find_str_quiet(options, "iou_thresh_kind", "iou");
     if (strcmp(iou_thresh_kind_str, "iou") == 0) l.iou_thresh_kind = IOU;
@@ -478,7 +478,7 @@ layer parse_yolo(list *options, size_params params)
     else if (strcmp(iou_thresh_kind_str, "diou") == 0) l.iou_thresh_kind = DIOU;
     else if (strcmp(iou_thresh_kind_str, "ciou") == 0) l.iou_thresh_kind = CIOU;
     else {
-        fprintf(stderr, " Wrong iou_thresh_kind = %s \n", iou_thresh_kind_str);
+        // fprintf(stderr, " Wrong iou_thresh_kind = %s \n", iou_thresh_kind_str);
         l.iou_thresh_kind = IOU;
     }
 
@@ -606,7 +606,7 @@ layer parse_gaussian_yolo(list *options, size_params params) // Gaussian_YOLOv3
     else if (strcmp(iou_thresh_kind_str, "diou") == 0) l.iou_thresh_kind = DIOU;
     else if (strcmp(iou_thresh_kind_str, "ciou") == 0) l.iou_thresh_kind = CIOU;
     else {
-        fprintf(stderr, " Wrong iou_thresh_kind = %s \n", iou_thresh_kind_str);
+        // fprintf(stderr, " Wrong iou_thresh_kind = %s \n", iou_thresh_kind_str);
         l.iou_thresh_kind = IOU;
     }
 
@@ -626,8 +626,8 @@ layer parse_gaussian_yolo(list *options, size_params params) // Gaussian_YOLOv3
     else if (strcmp(yolo_point, "right_bottom") == 0) l.yolo_point = YOLO_RIGHT_BOTTOM;
     else l.yolo_point = YOLO_CENTER;
 
-    fprintf(stderr, "[Gaussian_yolo] iou loss: %s (%d), iou_norm: %2.2f, cls_norm: %2.2f, scale: %2.2f, point: %d\n",
-        iou_loss, l.iou_loss, l.iou_normalizer, l.cls_normalizer, l.scale_x_y, l.yolo_point);
+    // fprintf(stderr, "[Gaussian_yolo] iou loss: %s (%d), iou_norm: %2.2f, cls_norm: %2.2f, scale: %2.2f, point: %d\n",
+        // iou_loss, l.iou_loss, l.iou_normalizer, l.cls_normalizer, l.scale_x_y, l.yolo_point);
 
     l.jitter = option_find_float(options, "jitter", .2);
     l.resize = option_find_float_quiet(options, "resize", 1.0);
@@ -976,9 +976,9 @@ layer parse_shortcut(list *options, size_params params, network net)
         int index = layers[i];
         assert(params.w == net.layers[index].out_w && params.h == net.layers[index].out_h);
 
-        if (params.w != net.layers[index].out_w || params.h != net.layers[index].out_h || params.c != net.layers[index].out_c)
-            fprintf(stderr, " (%4d x%4d x%4d) + (%4d x%4d x%4d) \n",
-                params.w, params.h, params.c, net.layers[index].out_w, net.layers[index].out_h, params.net.layers[index].out_c);
+        // if (params.w != net.layers[index].out_w || params.h != net.layers[index].out_h || params.c != net.layers[index].out_c)
+            // fprintf(stderr, " (%4d x%4d x%4d) + (%4d x%4d x%4d) \n",
+            //     params.w, params.h, params.c, net.layers[index].out_w, net.layers[index].out_h, params.net.layers[index].out_c);
     }
 
     return s;
@@ -1090,7 +1090,7 @@ route_layer parse_route(list *options, size_params params)
         if(next.out_w == first.out_w && next.out_h == first.out_h){
             layer.out_c += next.out_c;
         }else{
-            fprintf(stderr, " The width and height of the input layers are different. \n");
+            // fprintf(stderr, " The width and height of the input layers are different. \n");
             layer.out_h = layer.out_w = layer.out_c = 0;
         }
     }
@@ -1100,14 +1100,14 @@ route_layer parse_route(list *options, size_params params)
     layer.h = first.h;
     layer.c = layer.out_c;
 
-    if (n > 3) fprintf(stderr, " \t    ");
-    else if (n > 1) fprintf(stderr, " \t            ");
-    else fprintf(stderr, " \t\t            ");
+    // if (n > 3) fprintf(stderr, " \t    ");
+    // else if (n > 1) fprintf(stderr, " \t            ");
+    // else fprintf(stderr, " \t\t            ");
 
-    fprintf(stderr, "           ");
-    if (layer.groups > 1) fprintf(stderr, "%d/%d", layer.group_id, layer.groups);
-    else fprintf(stderr, "   ");
-    fprintf(stderr, " -> %4d x%4d x%4d \n", layer.out_w, layer.out_h, layer.out_c);
+    // fprintf(stderr, "           ");
+    // if (layer.groups > 1) fprintf(stderr, "%d/%d", layer.group_id, layer.groups);
+    // else fprintf(stderr, "   ");
+    // fprintf(stderr, " -> %4d x%4d x%4d \n", layer.out_w, layer.out_h, layer.out_c);
 
     return layer;
 }
@@ -1122,7 +1122,7 @@ learning_rate_policy get_policy(char *s)
     if (strcmp(s, "sigmoid")==0) return SIG;
     if (strcmp(s, "steps")==0) return STEPS;
     if (strcmp(s, "sgdr")==0) return SGDR;
-    fprintf(stderr, "Couldn't find policy %s, going with constant\n", s);
+    // fprintf(stderr, "Couldn't find policy %s, going with constant\n", s);
     return CONSTANT;
 }
 
@@ -1214,7 +1214,7 @@ void parse_net_options(list *options, network *net)
 #endif// CUDNN_HALF
         fprintf(stderr, " %d : compute_capability = %d, cudnn_half = %d, GPU: %s \n", net->gpu_index, compute_capability, net->cudnn_half, device_name);
     }
-    else fprintf(stderr, " GPU isn't used \n");
+    // else fprintf(stderr, " GPU isn't used \n");
 #endif// GPU
     if(net->policy == STEP){
         net->step = option_find_int(options, "step", 1);
@@ -1364,10 +1364,10 @@ network parse_network_cfg_custom(char *filename, int batch, int time_steps)
     n = n->next;
     int count = 0;
     free_section(s);
-    fprintf(stderr, "   layer   filters  size/strd(dil)      input                output\n");
+    // fprintf(stderr, "   layer   filters  size/strd(dil)      input                output\n");
     while(n){
         params.index = count;
-        fprintf(stderr, "%4d ", count);
+        // fprintf(stderr, "%4d ", count);
         s = (section *)n->val;
         options = s->options;
         layer l = { (LAYER_TYPE)0 };
@@ -1476,9 +1476,10 @@ network parse_network_cfg_custom(char *filename, int batch, int time_steps)
             l.output_gpu = net.layers[count - 1].output_gpu;
             l.delta_gpu = net.layers[count - 1].delta_gpu;
 #endif
-        }else{
-            fprintf(stderr, "Type not recognized: %s\n", s->type);
         }
+        // else{
+        //     fprintf(stderr, "Type not recognized: %s\n", s->type);
+        // }
 
         // calculate receptive field
         if(show_receptive_field)
@@ -1529,7 +1530,7 @@ network parse_network_cfg_custom(char *filename, int batch, int time_steps)
             int cur_receptive_w = receptive_w;
             int cur_receptive_h = receptive_h;
 
-            fprintf(stderr, "%4d - receptive field: %d x %d \n", count, cur_receptive_w, cur_receptive_h);
+            // fprintf(stderr, "%4d - receptive field: %d x %d \n", count, cur_receptive_w, cur_receptive_h);
         }
 
 #ifdef GPU
@@ -1651,8 +1652,8 @@ network parse_network_cfg_custom(char *filename, int batch, int time_steps)
     net.outputs = get_network_output_size(net);
     net.output = get_network_output(net);
     avg_outputs = avg_outputs / avg_counter;
-    fprintf(stderr, "Total BFLOPS %5.3f \n", bflops);
-    fprintf(stderr, "avg_outputs = %d \n", avg_outputs);
+    // fprintf(stderr, "Total BFLOPS %5.3f \n", bflops);
+    // fprintf(stderr, "avg_outputs = %d \n", avg_outputs);
 #ifdef GPU
     get_cuda_stream();
     get_cuda_memcpy_stream();
@@ -1676,7 +1677,7 @@ network parse_network_cfg_custom(char *filename, int batch, int time_steps)
             CHECK_CUDA(cudaMalloc((void **)net.output16_gpu, *net.max_output16_size * sizeof(short))); //sizeof(half)
         }
         if (workspace_size) {
-            fprintf(stderr, " Allocate additional workspace_size = %1.2f MB \n", (float)workspace_size/1000000);
+            // fprintf(stderr, " Allocate additional workspace_size = %1.2f MB \n", (float)workspace_size/1000000);
             net.workspace = cuda_make_array(0, workspace_size / sizeof(float) + 1);
         }
         else {
@@ -1724,7 +1725,7 @@ list *read_cfg(char *filename)
                 break;
             default:
                 if(!read_option(line, current->options)){
-                    fprintf(stderr, "Config file error line %d, could parse: %s\n", nu, line);
+                    // fprintf(stderr, "Config file error line %d, could parse: %s\n", nu, line);
                     free(line);
                 }
                 break;
@@ -1845,7 +1846,7 @@ void save_weights_upto(network net, char *filename, int cutoff)
         cuda_set_device(net.gpu_index);
     }
 #endif
-    fprintf(stderr, "Saving weights to %s\n", filename);
+    // fprintf(stderr, "Saving weights to %s\n", filename);
     FILE *fp = fopen(filename, "wb");
     if(!fp) file_error(filename);
 
@@ -2082,7 +2083,7 @@ void load_weights_upto(network *net, char *filename, int cutoff)
         cuda_set_device(net->gpu_index);
     }
 #endif
-    fprintf(stderr, "Loading weights from %s...", filename);
+    // fprintf(stderr, "Loading weights from %s...", filename);
     fflush(stdout);
     FILE *fp = fopen(filename, "rb");
     if(!fp) file_error(filename);
@@ -2183,7 +2184,7 @@ void load_weights_upto(network *net, char *filename, int cutoff)
         }
         if (feof(fp)) break;
     }
-    fprintf(stderr, "Done! Loaded %d layers from weights-file \n", i);
+    // fprintf(stderr, "Done! Loaded %d layers from weights-file \n", i);
     fclose(fp);
 }
 

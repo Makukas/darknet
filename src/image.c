@@ -705,7 +705,7 @@ void show_image(image p, const char *name)
 #ifdef OPENCV
     show_image_cv(p, name);
 #else
-    fprintf(stderr, "Not compiled with OpenCV, saving to %s.png instead\n", name);
+    // fprintf(stderr, "Not compiled with OpenCV, saving to %s.png instead\n", name);
     save_image(p, name);
 #endif  // OPENCV
 }
@@ -724,7 +724,7 @@ void save_image_png(image im, const char *name)
     }
     int success = stbi_write_png(buff, im.w, im.h, im.c, data, im.w*im.c);
     free(data);
-    if(!success) fprintf(stderr, "Failed to write image %s\n", buff);
+    // if(!success) fprintf(stderr, "Failed to write image %s\n", buff);
 }
 
 void save_image_options(image im, const char *name, IMTYPE f, int quality)
@@ -749,7 +749,7 @@ void save_image_options(image im, const char *name, IMTYPE f, int quality)
     else if (f == TGA) success = stbi_write_tga(buff, im.w, im.h, im.c, data);
     else if (f == JPG) success = stbi_write_jpg(buff, im.w, im.h, im.c, data, quality);
     free(data);
-    if (!success) fprintf(stderr, "Failed to write image %s\n", buff);
+    // if (!success) fprintf(stderr, "Failed to write image %s\n", buff);
 }
 
 void save_image(image im, const char *name)
@@ -1492,7 +1492,7 @@ image load_image_stb(char *filename, int channels)
         char shrinked_filename[1024];
         if (strlen(filename) >= 1024) sprintf(shrinked_filename, "name is too long");
         else sprintf(shrinked_filename, "%s", filename);
-        fprintf(stderr, "Cannot load image \"%s\"\nSTB Reason: %s\n", shrinked_filename, stbi_failure_reason());
+        // fprintf(stderr, "Cannot load image \"%s\"\nSTB Reason: %s\n", shrinked_filename, stbi_failure_reason());
         FILE* fw = fopen("bad.list", "a");
         fwrite(shrinked_filename, sizeof(char), strlen(shrinked_filename), fw);
         char *new_line = "\n";

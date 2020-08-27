@@ -51,7 +51,7 @@ void *cuda_get_context()
 {
     CUcontext pctx;
     CUresult status = cuCtxGetCurrent(&pctx);
-    if(status != CUDA_SUCCESS) fprintf(stderr, " Error: cuCtxGetCurrent() is failed \n");
+    // if(status != CUDA_SUCCESS) fprintf(stderr, " Error: cuCtxGetCurrent() is failed \n");
     return (void *)pctx;
 }
 
@@ -279,7 +279,7 @@ void pre_allocate_pinned_memory(const size_t size)
         int k;
         for (k = 0; k < num_of_blocks; ++k) {
             cudaError_t status = cudaHostAlloc((void **)&pinned_ptr[k], pinned_block_size, cudaHostRegisterMapped);
-            if (status != cudaSuccess) fprintf(stderr, " Can't pre-allocate CUDA-pinned buffer on CPU-RAM \n");
+            // if (status != cudaSuccess) fprintf(stderr, " Can't pre-allocate CUDA-pinned buffer on CPU-RAM \n");
             CHECK_CUDA(status);
             if (!pinned_ptr[k]) error("cudaHostAlloc failed\n");
             else {
@@ -321,7 +321,7 @@ float *cuda_make_array_pinned_preallocated(float *x, size_t n)
         if (allocation_size > pinned_block_size / 2) {
             printf("Try to allocate new pinned memory, size = %d MB \n", size / (1024 * 1024));
             cudaError_t status = cudaHostAlloc((void **)&x_cpu, size, cudaHostRegisterMapped);
-            if (status != cudaSuccess) fprintf(stderr, " Can't allocate CUDA-pinned memory on CPU-RAM (pre-allocated memory is over too) \n");
+            // if (status != cudaSuccess) fprintf(stderr, " Can't allocate CUDA-pinned memory on CPU-RAM (pre-allocated memory is over too) \n");
             CHECK_CUDA(status);
         }
         else {
@@ -331,7 +331,7 @@ float *cuda_make_array_pinned_preallocated(float *x, size_t n)
             pinned_index = 0;
             pinned_ptr = (float **)realloc(pinned_ptr, pinned_num_of_blocks * sizeof(float *));
             cudaError_t status = cudaHostAlloc((void **)&pinned_ptr[pinned_block_id], pinned_block_size, cudaHostRegisterMapped);
-            if (status != cudaSuccess) fprintf(stderr, " Can't pre-allocate CUDA-pinned buffer on CPU-RAM \n");
+            // if (status != cudaSuccess) fprintf(stderr, " Can't pre-allocate CUDA-pinned buffer on CPU-RAM \n");
             CHECK_CUDA(status);
             x_cpu = pinned_ptr[pinned_block_id];
         }
@@ -352,7 +352,7 @@ float *cuda_make_array_pinned(float *x, size_t n)
     size_t size = sizeof(float)*n;
     //cudaError_t status = cudaMalloc((void **)&x_gpu, size);
     cudaError_t status = cudaHostAlloc((void **)&x_gpu, size, cudaHostRegisterMapped);
-    if (status != cudaSuccess) fprintf(stderr, " Can't allocate CUDA-pinned memory on CPU-RAM \n");
+    // if (status != cudaSuccess) fprintf(stderr, " Can't allocate CUDA-pinned memory on CPU-RAM \n");
     CHECK_CUDA(status);
     if (x) {
         status = cudaMemcpyAsync(x_gpu, x, size, cudaMemcpyDefault, get_cuda_stream());
@@ -369,7 +369,7 @@ float *cuda_make_array(float *x, size_t n)
     cudaError_t status = cudaMalloc((void **)&x_gpu, size);
     //cudaError_t status = cudaMallocManaged((void **)&x_gpu, size, cudaMemAttachGlobal);
     //status = cudaMemAdvise(x_gpu, size, cudaMemAdviseSetPreferredLocation, cudaCpuDeviceId);
-    if (status != cudaSuccess) fprintf(stderr, " Try to set subdivisions=64 in your cfg-file. \n");
+    // if (status != cudaSuccess) fprintf(stderr, " Try to set subdivisions=64 in your cfg-file. \n");
     CHECK_CUDA(status);
     if(x){
         //status = cudaMemcpy(x_gpu, x, size, cudaMemcpyHostToDevice);
@@ -385,7 +385,7 @@ void **cuda_make_array_pointers(void **x, size_t n)
     void **x_gpu;
     size_t size = sizeof(void*) * n;
     cudaError_t status = cudaMalloc((void **)&x_gpu, size);
-    if (status != cudaSuccess) fprintf(stderr, " Try to set subdivisions=64 in your cfg-file. \n");
+    // if (status != cudaSuccess) fprintf(stderr, " Try to set subdivisions=64 in your cfg-file. \n");
     CHECK_CUDA(status);
     if (x) {
         status = cudaMemcpyAsync(x_gpu, x, size, cudaMemcpyDefault, get_cuda_stream());
@@ -427,7 +427,7 @@ int *cuda_make_int_array(size_t n)
     int *x_gpu;
     size_t size = sizeof(int)*n;
     cudaError_t status = cudaMalloc((void **)&x_gpu, size);
-    if(status != cudaSuccess) fprintf(stderr, " Try to set subdivisions=64 in your cfg-file. \n");
+    // if(status != cudaSuccess) fprintf(stderr, " Try to set subdivisions=64 in your cfg-file. \n");
     CHECK_CUDA(status);
     return x_gpu;
 }
@@ -507,17 +507,17 @@ void show_cuda_cudnn_info()
     int cuda_version = 0, cuda_driver_version = 0, device_count = 0;
     CHECK_CUDA(cudaRuntimeGetVersion(&cuda_version));
     CHECK_CUDA(cudaDriverGetVersion(&cuda_driver_version));
-    fprintf(stderr, " CUDA-version: %d (%d)", cuda_version, cuda_driver_version);
-    if(cuda_version > cuda_driver_version) fprintf(stderr, "\n Warning: CUDA-version is higher than Driver-version! \n");
-#ifdef CUDNN
-    fprintf(stderr, ", cuDNN: %d.%d.%d", CUDNN_MAJOR, CUDNN_MINOR, CUDNN_PATCHLEVEL);
-#endif  // CUDNN
+    // fprintf(stderr, " CUDA-version: %d (%d)", cuda_version, cuda_driver_version);
+    // if(cuda_version > cuda_driver_version) fprintf(stderr, "\n Warning: CUDA-version is higher than Driver-version! \n");
+// #ifdef CUDNN
+    // fprintf(stderr, ", cuDNN: %d.%d.%d", CUDNN_MAJOR, CUDNN_MINOR, CUDNN_PATCHLEVEL);
+// #endif  // CUDNN
 #ifdef CUDNN_HALF
     fprintf(stderr, ", CUDNN_HALF=1");
 #endif  // CUDNN_HALF
     CHECK_CUDA(cudaGetDeviceCount(&device_count));
-    fprintf(stderr, ", GPU count: %d ", device_count);
-    fprintf(stderr, " \n");
+    // fprintf(stderr, ", GPU count: %d ", device_count);
+    // fprintf(stderr, " \n");
 }
 
 #else // GPU

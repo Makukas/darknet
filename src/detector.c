@@ -303,16 +303,16 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         next_map_calc = fmax(next_map_calc, net.burn_in);
         //next_map_calc = fmax(next_map_calc, 400);
         if (calc_map) {
-            printf("\n (next mAP calculation at %d iterations) ", next_map_calc);
-            if (mean_average_precision > 0) printf("\n Last accuracy mAP@0.5 = %2.2f %%, best = %2.2f %% ", mean_average_precision * 100, best_map * 100);
+            // printf("\n (next mAP calculation at %d iterations) ", next_map_calc);
+            // if (mean_average_precision > 0) printf("\n Last accuracy mAP@0.5 = %2.2f %%, best = %2.2f %% ", mean_average_precision * 100, best_map * 100);
         }
 
         if (net.cudnn_half) {
-            if (iteration < net.burn_in * 3) fprintf(stderr, "\n Tensor Cores are disabled until the first %d iterations are reached.\n", 3 * net.burn_in);
-            else fprintf(stderr, "\n Tensor Cores are used.\n");
+            // if (iteration < net.burn_in * 3) fprintf(stderr, "\n Tensor Cores are disabled until the first %d iterations are reached.\n", 3 * net.burn_in);
+            // else fprintf(stderr, "\n Tensor Cores are used.\n");
             fflush(stderr);
         }
-        printf("\n %d: %f, %f avg loss, %f rate, %lf seconds, %d images, %f hours left\n", iteration, loss, avg_loss, get_current_rate(net), (what_time_is_it_now() - time), iteration*imgs, avg_time);
+        // printf("\n %d: %f, %f avg loss, %f rate, %lf seconds, %d images, %f hours left\n", iteration, loss, avg_loss, get_current_rate(net), (what_time_is_it_now() - time), iteration*imgs, avg_time);
         fflush(stdout);
 
         int draw_precision = 0;
@@ -474,7 +474,7 @@ static void print_cocos(FILE *fp, char *image_path, detection *dets, int num_box
             if (dets[i].prob[j] > 0) {
                 char buff[1024];
                 sprintf(buff, "{\"image_id\":%d, \"category_id\":%d, \"bbox\":[%f, %f, %f, %f], \"score\":%f},\n", image_id, coco_ids[j], bx, by, bw, bh, dets[i].prob[j]);
-                fprintf(fp, buff);
+                // fprintf(fp, buff);
                 //printf("%s", buff);
             }
         }
@@ -495,10 +495,10 @@ void print_detector_detections(FILE **fps, char *id, detection *dets, int total,
         if (xmax > w) xmax = w;
         if (ymax > h) ymax = h;
 
-        for (j = 0; j < classes; ++j) {
-            if (dets[i].prob[j]) fprintf(fps[j], "%s %f %f %f %f %f\n", id, dets[i].prob[j],
-                xmin, ymin, xmax, ymax);
-        }
+        // for (j = 0; j < classes; ++j) {
+        //     if (dets[i].prob[j]) fprintf(fps[j], "%s %f %f %f %f %f\n", id, dets[i].prob[j],
+        //         xmin, ymin, xmax, ymax);
+        // }
     }
 }
 
@@ -518,8 +518,8 @@ void print_imagenet_detections(FILE *fp, int id, detection *dets, int total, int
 
         for (j = 0; j < classes; ++j) {
             int myclass = j;
-            if (dets[i].prob[myclass] > 0) fprintf(fp, "%d %d %f %f %f %f %f\n", id, j + 1, dets[i].prob[myclass],
-                xmin, ymin, xmax, ymax);
+            // if (dets[i].prob[myclass] > 0) fprintf(fp, "%d %d %f %f %f %f %f\n", id, j + 1, dets[i].prob[myclass],
+            //     xmin, ymin, xmax, ymax);
         }
     }
 }
@@ -548,7 +548,7 @@ static void print_kitti_detections(FILE **fps, char *id, detection *dets, int to
         for (j = 0; j < classes; ++j)
         {
             //if (dets[i].prob[j]) fprintf(fpd, "%s 0 0 0 %f %f %f %f -1 -1 -1 -1 0 0 0 %f\n", kitti_ids[j], xmin, ymin, xmax, ymax, dets[i].prob[j]);
-            if (dets[i].prob[j]) fprintf(fpd, "%s -1 -1 -10 %f %f %f %f -1 -1 -1 -1000 -1000 -1000 -10 %f\n", kitti_ids[j], xmin, ymin, xmax, ymax, dets[i].prob[j]);
+            // if (dets[i].prob[j]) fprintf(fpd, "%s -1 -1 -10 %f %f %f %f -1 -1 -1 -1000 -1000 -1000 -10 %f\n", kitti_ids[j], xmin, ymin, xmax, ymax, dets[i].prob[j]);
         }
     }
     fclose(fpd);
@@ -612,13 +612,13 @@ static void print_bdd_detections(FILE *fp, char *image_path, detection *dets, in
         float bx2 = xmax;
         float by2 = ymax;
 
-        for (j = 0; j < classes; ++j)
-        {
-            if (dets[i].prob[j])
-            {
-                fprintf(fp, "\t{\n\t\t\"name\":\"%s\",\n\t\t\"category\":\"%s\",\n\t\t\"bbox\":[%f, %f, %f, %f],\n\t\t\"score\":%f\n\t},\n", image_path, bdd_ids[j], bx1, by1, bx2, by2, dets[i].prob[j]);
-            }
-        }
+        // for (j = 0; j < classes; ++j)
+        // {
+        //     if (dets[i].prob[j])
+        //     {
+        //         fprintf(fp, "\t{\n\t\t\"name\":\"%s\",\n\t\t\"category\":\"%s\",\n\t\t\"bbox\":[%f, %f, %f, %f],\n\t\t\"score\":%f\n\t},\n", image_path, bdd_ids[j], bx1, by1, bx2, by2, dets[i].prob[j]);
+        //     }
+        // }
     }
 }
 
@@ -641,7 +641,7 @@ void validate_detector(char *datacfg, char *cfgfile, char *weightfile, char *out
     //set_batch_network(&net, 1);
     fuse_conv_batchnorm(net);
     calculate_binary_weights(net);
-    fprintf(stderr, "Learning Rate: %g, Momentum: %g, Decay: %g\n", net.learning_rate, net.momentum, net.decay);
+    // fprintf(stderr, "Learning Rate: %g, Momentum: %g, Decay: %g\n", net.learning_rate, net.momentum, net.decay);
     srand(time(0));
 
     list *plist = get_paths(valid_images);
@@ -671,14 +671,14 @@ void validate_detector(char *datacfg, char *cfgfile, char *weightfile, char *out
         if (!outfile) outfile = "coco_results";
         snprintf(buff, 1024, "%s/%s.json", prefix, outfile);
         fp = fopen(buff, "w");
-        fprintf(fp, "[\n");
+        // fprintf(fp, "[\n");
         coco = 1;
     }
     else if (0 == strcmp(type, "bdd")) {
         if (!outfile) outfile = "bdd_results";
         snprintf(buff, 1024, "%s/%s.json", prefix, outfile);
         fp = fopen(buff, "w");
-        fprintf(fp, "[\n");
+        // fprintf(fp, "[\n");
         bdd = 1;
     }
     else if (0 == strcmp(type, "kitti")) {
@@ -739,7 +739,7 @@ void validate_detector(char *datacfg, char *cfgfile, char *weightfile, char *out
     }
     time_t start = time(0);
     for (i = nthreads; i < m + nthreads; i += nthreads) {
-        fprintf(stderr, "%d\n", i);
+        // fprintf(stderr, "%d\n", i);
         for (t = 0; t < nthreads && i + t - nthreads < m; ++t) {
             pthread_join(thr[t], 0);
             val[t] = buf[t];
@@ -799,7 +799,7 @@ void validate_detector(char *datacfg, char *cfgfile, char *weightfile, char *out
 #else
         fseek(fp, -2, SEEK_CUR);
 #endif
-        fprintf(fp, "\n]\n");
+        // fprintf(fp, "\n]\n");
     }
 
     if (bdd) {
@@ -808,7 +808,7 @@ void validate_detector(char *datacfg, char *cfgfile, char *weightfile, char *out
 #else
         fseek(fp, -2, SEEK_CUR);
 #endif
-        fprintf(fp, "\n]\n");
+        // fprintf(fp, "\n]\n");
         fclose(fp);
     }
 
@@ -820,7 +820,7 @@ void validate_detector(char *datacfg, char *cfgfile, char *weightfile, char *out
     if (buf) free(buf);
     if (buf_resized) free(buf_resized);
 
-    fprintf(stderr, "Total Detection Time: %f Seconds\n", (double)time(0) - start);
+    // fprintf(stderr, "Total Detection Time: %f Seconds\n", (double)time(0) - start);
 }
 
 void validate_detector_recall(char *datacfg, char *cfgfile, char *weightfile)
@@ -892,7 +892,7 @@ void validate_detector_recall(char *datacfg, char *cfgfile, char *weightfile)
             }
         }
         //fprintf(stderr, " %s - %s - ", paths[i], labelpath);
-        fprintf(stderr, "%5d %5d %5d\tRPs/Img: %.2f\tIOU: %.2f%%\tRecall:%.2f%%\n", i, correct, total, (float)proposals / (i + 1), avg_iou * 100 / total, 100.*correct / total);
+        // fprintf(stderr, "%5d %5d %5d\tRPs/Img: %.2f\tIOU: %.2f%%\tRecall:%.2f%%\n", i, correct, total, (float)proposals / (i + 1), avg_iou * 100 / total, 100.*correct / total);
         free(id);
         free_image(orig);
         free_image(sized);
@@ -1026,7 +1026,7 @@ float validate_detector_map(char *datacfg, char *cfgfile, char *weightfile, floa
     }
     time_t start = time(0);
     for (i = nthreads; i < m + nthreads; i += nthreads) {
-        fprintf(stderr, "\r%d", i);
+        // fprintf(stderr, "\r%d", i);
         for (t = 0; t < nthreads && (i + t - nthreads) < m; ++t) {
             pthread_join(thr[t], 0);
             val[t] = buf[t];
@@ -1339,7 +1339,7 @@ float validate_detector_map(char *datacfg, char *cfgfile, char *weightfile, floa
     if (map_points) printf("used %d Recall-points \n", map_points);
     else printf("used Area-Under-Curve for each unique Recall \n");
 
-    printf(" mean average precision (mAP@%0.2f) = %f, or %2.2f %% \n", iou_thresh, mean_average_precision, mean_average_precision * 100);
+    // printf(" mean average precision (mAP@%0.2f) = %f, or %2.2f %% \n", iou_thresh, mean_average_precision, mean_average_precision * 100);
 
     for (i = 0; i < classes; ++i) {
         free(pr[i]);
@@ -1353,11 +1353,11 @@ float validate_detector_map(char *datacfg, char *cfgfile, char *weightfile, floa
     free(tp_for_thresh_per_class);
     free(fp_for_thresh_per_class);
 
-    fprintf(stderr, "Total Detection Time: %d Seconds\n", (int)(time(0) - start));
-    printf("\nSet -points flag:\n");
-    printf(" `-points 101` for MS COCO \n");
-    printf(" `-points 11` for PascalVOC 2007 (uncomment `difficult` in voc.data) \n");
-    printf(" `-points 0` (AUC) for ImageNet, PascalVOC 2010-2012, your custom dataset\n");
+    // fprintf(stderr, "Total Detection Time: %d Seconds\n", (int)(time(0) - start));
+    // printf("\nSet -points flag:\n");
+    // printf(" `-points 101` for MS COCO \n");
+    // printf(" `-points 11` for PascalVOC 2007 (uncomment `difficult` in voc.data) \n");
+    // printf(" `-points 0` (AUC) for ImageNet, PascalVOC 2010-2012, your custom dataset\n");
     if (reinforcement_fd != NULL) fclose(reinforcement_fd);
 
     // free memory
@@ -1965,7 +1965,7 @@ void run_detector(int argc, char **argv)
     int save_labels = find_arg(argc, argv, "-save_labels");
     char* chart_path = find_char_arg(argc, argv, "-chart", 0);
     if (argc < 4) {
-        fprintf(stderr, "usage: %s %s [train/test/valid/demo/map] [data] [cfg] [weights (optional)]\n", argv[0], argv[1]);
+        // fprintf(stderr, "usage: %s %s [train/test/valid/demo/map] [data] [cfg] [weights (optional)]\n", argv[0], argv[1]);
         return;
     }
     char *gpu_list = find_char_arg(argc, argv, "-gpus", 0);

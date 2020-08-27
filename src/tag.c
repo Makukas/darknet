@@ -48,7 +48,7 @@ void train_tag(char *cfgfile, char *weightfile, int clear)
     args.saturation = net.saturation;
     args.hue = net.hue;
 
-    fprintf(stderr, "%d classes\n", net.outputs);
+    // fprintf(stderr, "%d classes\n", net.outputs);
 
     load_thread = load_data_in_thread(args);
     int epoch = (*net.seen)/N;
@@ -138,7 +138,7 @@ void test_tag(char *cfgfile, char *weightfile, char *filename)
 void run_tag(int argc, char **argv)
 {
     if(argc < 4){
-        fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
+        // fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
         return;
     }
 

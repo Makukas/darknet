@@ -107,7 +107,7 @@ void train_vid_rnn(char *cfgfile, char *weightfile)
         if (avg_loss < 0) avg_loss = loss;
         avg_loss = avg_loss*.9 + loss*.1;
 
-        fprintf(stderr, "%d: %f, %f avg, %f rate, %lf seconds\n", i, loss, avg_loss, get_current_rate(net), sec(clock()-time));
+        // fprintf(stderr, "%d: %f, %f avg, %f rate, %lf seconds\n", i, loss, avg_loss, get_current_rate(net), sec(clock()-time));
         if(i%100==0){
             char buff[256];
             sprintf(buff, "%s/%s_%d.weights", backup_directory, base, i);
@@ -193,7 +193,7 @@ void generate_vid_rnn(char *cfgfile, char *weightfile)
 void run_vid_rnn(int argc, char **argv)
 {
     if(argc < 4){
-        fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
+        // fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
         return;
     }
 

@@ -151,7 +151,7 @@ void valid_captcha(char *cfgfile, char *weightfile, char *filename)
     srand(2222222);
     int i, j;
     for(i = 0; i < N; ++i){
-        if (i%100 == 0) fprintf(stderr, "%d\n", i);
+        // if (i%100 == 0) fprintf(stderr, "%d\n", i);
         image im = load_image_color(paths[i], net.w, net.h);
         float *X = im.data;
         float *predictions = network_predict(net, X);
@@ -161,7 +161,7 @@ void valid_captcha(char *cfgfile, char *weightfile, char *filename)
             if (strstr(paths[i], labels[j])) truth = j;
         }
         if (truth == -1){
-            fprintf(stderr, "bad: %s\n", paths[i]);
+            // fprintf(stderr, "bad: %s\n", paths[i]);
             return;
         }
         printf("%d, ", truth);
@@ -346,7 +346,7 @@ void test_captcha(char *cfgfile, char *weightfile)
 void run_captcha(int argc, char **argv)
 {
     if(argc < 4){
-        fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
+        // fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
         return;
     }
 

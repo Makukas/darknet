@@ -207,7 +207,7 @@ void test_cifar_csv(char *filename, char *weightfile)
     matrix_add_matrix(pred2, pred);
 
     matrix_to_csv(pred);
-    fprintf(stderr, "Accuracy: %f\n", matrix_topk_accuracy(test.y, pred, 1));
+    // fprintf(stderr, "Accuracy: %f\n", matrix_topk_accuracy(test.y, pred, 1));
     free_data(test);
 }
 
@@ -234,7 +234,7 @@ void test_cifar_csvtrain(char *filename, char *weightfile)
     matrix_add_matrix(pred2, pred);
 
     matrix_to_csv(pred);
-    fprintf(stderr, "Accuracy: %f\n", matrix_topk_accuracy(test.y, pred, 1));
+    // fprintf(stderr, "Accuracy: %f\n", matrix_topk_accuracy(test.y, pred, 1));
     free_data(test);
 }
 
@@ -243,9 +243,9 @@ void eval_cifar_csv()
     data test = load_cifar10_data("data/cifar/cifar-10-batches-bin/test_batch.bin");
 
     matrix pred = csv_to_matrix("results/combined.csv");
-    fprintf(stderr, "%d %d\n", pred.rows, pred.cols);
+    // fprintf(stderr, "%d %d\n", pred.rows, pred.cols);
 
-    fprintf(stderr, "Accuracy: %f\n", matrix_topk_accuracy(test.y, pred, 1));
+    // fprintf(stderr, "Accuracy: %f\n", matrix_topk_accuracy(test.y, pred, 1));
     free_data(test);
     free_matrix(pred);
 }
@@ -254,7 +254,7 @@ void eval_cifar_csv()
 void run_cifar(int argc, char **argv)
 {
     if(argc < 4){
-        fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
+        // fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
         return;
     }
 

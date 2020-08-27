@@ -450,7 +450,7 @@ int main(int argc, char **argv)
     //test_box();
     //test_convolutional_layer();
     if(argc < 2){
-        fprintf(stderr, "usage: %s <function>\n", argv[0]);
+        // fprintf(stderr, "usage: %s <function>\n", argv[0]);
         return 0;
     }
     gpu_index = find_int_arg(argc, argv, "-i", 0);
@@ -552,8 +552,9 @@ int main(int argc, char **argv)
         visualize(argv[2], (argc > 3) ? argv[3] : 0);
     } else if (0 == strcmp(argv[1], "imtest")){
         test_resize(argv[2]);
-    } else {
-        fprintf(stderr, "Not an option: %s\n", argv[1]);
-    }
+    } 
+    // else {
+    //     fprintf(stderr, "Not an option: %s\n", argv[1]);
+    // }
     return 0;
 }

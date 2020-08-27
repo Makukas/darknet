@@ -144,7 +144,7 @@ void train_char_rnn(char *cfgfile, char *weightfile, char *filename, int clear, 
 
     char* backup_directory = "backup/";
     char *base = basecfg(cfgfile);
-    fprintf(stderr, "%s\n", base);
+    // fprintf(stderr, "%s\n", base);
     float avg_loss = -1;
     network net = parse_network_cfg(cfgfile);
     if(weightfile){
@@ -152,7 +152,7 @@ void train_char_rnn(char *cfgfile, char *weightfile, char *filename, int clear, 
     }
 
     int inputs = get_network_input_size(net);
-    fprintf(stderr, "Learning Rate: %g, Momentum: %g, Decay: %g\n", net.learning_rate, net.momentum, net.decay);
+    // fprintf(stderr, "Learning Rate: %g, Momentum: %g, Decay: %g\n", net.learning_rate, net.momentum, net.decay);
     int batch = net.batch;
     int steps = net.time_steps;
     if (clear) {
@@ -190,7 +190,7 @@ void train_char_rnn(char *cfgfile, char *weightfile, char *filename, int clear, 
         avg_loss = avg_loss*.9 + loss*.1;
 
         int chars = get_current_batch(net)*batch;
-        fprintf(stderr, "%d: %f, %f avg, %f rate, %lf seconds, %f epochs\n", i, loss, avg_loss, get_current_rate(net), sec(clock()-time), (float) chars/size);
+        // fprintf(stderr, "%d: %f, %f avg, %f rate, %lf seconds, %f epochs\n", i, loss, avg_loss, get_current_rate(net), sec(clock()-time), (float) chars/size);
 
         for(j = 0; j < streams; ++j){
             //printf("%d\n", j);
@@ -235,7 +235,7 @@ void test_char_rnn(char *cfgfile, char *weightfile, int num, char *seed, float t
 
     srand(rseed);
     char *base = basecfg(cfgfile);
-    fprintf(stderr, "%s\n", base);
+    // fprintf(stderr, "%s\n", base);
 
     network net = parse_network_cfg_custom(cfgfile, 1, 1);  // batch=1, time_steps=1
     if(weightfile){
@@ -295,7 +295,7 @@ void test_tactic_rnn(char *cfgfile, char *weightfile, int num, float temp, int r
 
     srand(rseed);
     char *base = basecfg(cfgfile);
-    fprintf(stderr, "%s\n", base);
+    // fprintf(stderr, "%s\n", base);
 
     network net = parse_network_cfg(cfgfile);
     if(weightfile){
@@ -333,7 +333,7 @@ void test_tactic_rnn(char *cfgfile, char *weightfile, int num, float temp, int r
 void valid_tactic_rnn(char *cfgfile, char *weightfile, char *seed)
 {
     char *base = basecfg(cfgfile);
-    fprintf(stderr, "%s\n", base);
+    // fprintf(stderr, "%s\n", base);
 
     network net = parse_network_cfg(cfgfile);
     if(weightfile){
@@ -385,7 +385,7 @@ void valid_tactic_rnn(char *cfgfile, char *weightfile, char *seed)
 void valid_char_rnn(char *cfgfile, char *weightfile, char *seed)
 {
     char *base = basecfg(cfgfile);
-    fprintf(stderr, "%s\n", base);
+    // fprintf(stderr, "%s\n", base);
 
     network net = parse_network_cfg(cfgfile);
     if(weightfile){
@@ -426,7 +426,7 @@ void valid_char_rnn(char *cfgfile, char *weightfile, char *seed)
 void vec_char_rnn(char *cfgfile, char *weightfile, char *seed)
 {
     char *base = basecfg(cfgfile);
-    fprintf(stderr, "%s\n", base);
+    // fprintf(stderr, "%s\n", base);
 
     network net = parse_network_cfg(cfgfile);
     if(weightfile){
@@ -475,7 +475,7 @@ void vec_char_rnn(char *cfgfile, char *weightfile, char *seed)
 void run_char_rnn(int argc, char **argv)
 {
     if(argc < 4){
-        fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
+        // fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
         return;
     }
     char *filename = find_char_arg(argc, argv, "-file", "data/shakespeare.txt");

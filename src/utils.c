@@ -291,12 +291,13 @@ void replace_image_to_label(const char* input_path, char* output_path)
     // Check file ends with txt:
     if(strlen(output_path) > 4) {
         char *output_path_ext = output_path + strlen(output_path) - 4;
-        if( strcmp(".txt", output_path_ext) != 0){
-            fprintf(stderr, "Failed to infer label file name (check image extension is supported): %s \n", output_path);
-        }
-    }else{
-        fprintf(stderr, "Label file name is too short: %s \n", output_path);
+        // if( strcmp(".txt", output_path_ext) != 0){
+        //     fprintf(stderr, "Failed to infer label file name (check image extension is supported): %s \n", output_path);
+        // }
     }
+    // else{
+    //     fprintf(stderr, "Label file name is too short: %s \n", output_path);
+    // }
 }
 
 float sec(clock_t clocks)
@@ -329,25 +330,25 @@ void error(const char *s)
 
 void malloc_error()
 {
-    fprintf(stderr, "xMalloc error - possibly out of CPU RAM \n");
+    // fprintf(stderr, "xMalloc error - possibly out of CPU RAM \n");
     exit(EXIT_FAILURE);
 }
 
 void calloc_error()
 {
-    fprintf(stderr, "Calloc error - possibly out of CPU RAM \n");
+    // fprintf(stderr, "Calloc error - possibly out of CPU RAM \n");
     exit(EXIT_FAILURE);
 }
 
 void realloc_error()
 {
-    fprintf(stderr, "Realloc error - possibly out of CPU RAM \n");
+    // fprintf(stderr, "Realloc error - possibly out of CPU RAM \n");
     exit(EXIT_FAILURE);
 }
 
 void file_error(char *s)
 {
-    fprintf(stderr, "Couldn't open file: %s\n", s);
+    // fprintf(stderr, "Couldn't open file: %s\n", s);
     exit(EXIT_FAILURE);
 }
 

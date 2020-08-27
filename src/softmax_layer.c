@@ -29,7 +29,7 @@ void softmax_tree(float *input, int batch, int inputs, float temp, tree *hierarc
 softmax_layer make_softmax_layer(int batch, int inputs, int groups)
 {
     assert(inputs%groups == 0);
-    fprintf(stderr, "softmax                                        %4d\n",  inputs);
+    // fprintf(stderr, "softmax                                        %4d\n",  inputs);
     softmax_layer l = { (LAYER_TYPE)0 };
     l.type = SOFTMAX;
     l.batch = batch;
@@ -199,8 +199,8 @@ contrastive_layer make_contrastive_layer(int batch, int w, int h, int c, int cla
     printf(" max_contr_size = %d MB \n", max_contr_size / (1024*1024));
     l.contrast_p_gpu = (contrastive_params *)cuda_make_array(NULL, max_contr_size);
 #endif
-    fprintf(stderr, "contrastive %4d x%4d x%4d x emb_size %4d x batch: %4d  classes = %4d, step = %4d \n", w, h, l.n, l.embedding_size, batch, l.classes, step);
-    if(l.detection) fprintf(stderr, "detection \n");
+    // fprintf(stderr, "contrastive %4d x%4d x%4d x emb_size %4d x batch: %4d  classes = %4d, step = %4d \n", w, h, l.n, l.embedding_size, batch, l.classes, step);
+    // if(l.detection) fprintf(stderr, "detection \n");
     return l;
 }
 

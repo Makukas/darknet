@@ -648,7 +648,7 @@ float P_constrastive_f_det(size_t il, int *labels, float **z, unsigned int featu
 float P_constrastive_f(size_t i, size_t l, int *labels, float **z, unsigned int feature_size, float temperature, contrastive_params *contrast_p, int contrast_p_size)
 {
     if (i == l) {
-        fprintf(stderr, " Error: in P_constrastive must be i != l, while i = %d, l = %d \n", i, l);
+        // fprintf(stderr, " Error: in P_constrastive must be i != l, while i = %d, l = %d \n", i, l);
         getchar();
     }
 
@@ -684,8 +684,8 @@ void grad_contrastive_loss_positive_f(size_t i, int *labels, size_t num_of_sampl
         if (labels[i] == labels[j] && labels[i] >= 0) N++;
     }
     if (N == 0 || temperature == 0 || vec_len == 0) {
-        fprintf(stderr, " Error: N == 0 || temperature == 0 || vec_len == 0. N=%f, temperature=%f, vec_len=%f, labels[i] = %d \n",
-            N, temperature, vec_len, labels[i]);
+        // fprintf(stderr, " Error: N == 0 || temperature == 0 || vec_len == 0. N=%f, temperature=%f, vec_len=%f, labels[i] = %d \n",
+        //     N, temperature, vec_len, labels[i]);
         getchar();
         return;
     }
@@ -730,8 +730,8 @@ void grad_contrastive_loss_negative_f(size_t i, int *labels, size_t num_of_sampl
         if (labels[i] == labels[j] && labels[i] >= 0) N++;
     }
     if (N == 0 || temperature == 0 || vec_len == 0) {
-        fprintf(stderr, " Error: N == 0 || temperature == 0 || vec_len == 0. N=%f, temperature=%f, vec_len=%f, labels[i] = %d \n",
-            N, temperature, vec_len, labels[i]);
+        // fprintf(stderr, " Error: N == 0 || temperature == 0 || vec_len == 0. N=%f, temperature=%f, vec_len=%f, labels[i] = %d \n",
+        //     N, temperature, vec_len, labels[i]);
         getchar();
         return;
     }
@@ -777,7 +777,7 @@ void grad_contrastive_loss_negative_f(size_t i, int *labels, size_t num_of_sampl
 float P_constrastive(size_t i, size_t l, int *labels, size_t num_of_samples, float **z, unsigned int feature_size, float temperature, float *cos_sim, float *exp_cos_sim)
 {
     if (i == l) {
-        fprintf(stderr, " Error: in P_constrastive must be i != l, while i = %d, l = %d \n", i, l);
+        // fprintf(stderr, " Error: in P_constrastive must be i != l, while i = %d, l = %d \n", i, l);
         getchar();
     }
 
@@ -814,7 +814,7 @@ void grad_contrastive_loss_positive(size_t i, int *labels, size_t num_of_samples
         if (labels[i] == labels[j]) N++;
     }
     if (N == 0 || temperature == 0 || vec_len == 0) {
-        fprintf(stderr, " Error: N == 0 || temperature == 0 || vec_len == 0. N=%f, temperature=%f, vec_len=%f \n", N, temperature, vec_len);
+        // fprintf(stderr, " Error: N == 0 || temperature == 0 || vec_len == 0. N=%f, temperature=%f, vec_len=%f \n", N, temperature, vec_len);
         getchar();
     }
     const float mult = 1 / ((N - 1) * temperature * vec_len);
@@ -854,7 +854,7 @@ void grad_contrastive_loss_negative(size_t i, int *labels, size_t num_of_samples
         if (labels[i] == labels[j]) N++;
     }
     if (N == 0 || temperature == 0 || vec_len == 0) {
-        fprintf(stderr, " Error: N == 0 || temperature == 0 || vec_len == 0. N=%f, temperature=%f, vec_len=%f \n", N, temperature, vec_len);
+        // fprintf(stderr, " Error: N == 0 || temperature == 0 || vec_len == 0. N=%f, temperature=%f, vec_len=%f \n", N, temperature, vec_len);
         getchar();
     }
     const float mult = 1 / ((N - 1) * temperature * vec_len);

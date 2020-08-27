@@ -179,7 +179,7 @@ void run_nightmare(int argc, char **argv)
 {
     srand(time(0));
     if(argc < 4){
-        fprintf(stderr, "usage: %s %s [cfg] [weights] [image] [layer] [options! (optional)]\n", argv[0], argv[1]);
+        // fprintf(stderr, "usage: %s %s [cfg] [weights] [image] [layer] [options! (optional)]\n", argv[0], argv[1]);
         return;
     }
 
@@ -254,10 +254,10 @@ void run_nightmare(int argc, char **argv)
     int e;
     int n;
     for(e = 0; e < rounds; ++e){
-        fprintf(stderr, "Iteration: ");
+        // fprintf(stderr, "Iteration: ");
         fflush(stderr);
         for(n = 0; n < iters; ++n){
-            fprintf(stderr, "%d, ", n);
+            // fprintf(stderr, "%d, ", n);
             fflush(stderr);
             if(reconstruct){
                 reconstruct_picture(net, features, im, update, rate, momentum, lambda, smooth_size, 1);
@@ -272,7 +272,7 @@ void run_nightmare(int argc, char **argv)
                 optimize_picture(&net, im, layer, 1/pow(1.33333333, octave), rate, thresh, norm);
             }
         }
-        fprintf(stderr, "done\n");
+        // fprintf(stderr, "done\n");
         if(0){
             image g = grayscale_image(im);
             free_image(im);

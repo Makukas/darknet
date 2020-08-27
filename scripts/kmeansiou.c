@@ -144,7 +144,7 @@ model do_kmeans(matrix data, int k)
 int main(int argc, char *argv[])
 {
     if(argc < 3){ 
-        fprintf(stderr, "usage: %s <csv-file> [points/centers/stats]\n", argv[0]);
+        // fprintf(stderr, "usage: %s <csv-file> [points/centers/stats]\n", argv[0]);
         return 0;
     } 
     int i,j;
@@ -222,7 +222,7 @@ void copy(double *x, double *y, int n)
 }
 
 void error(char *s){
-    fprintf(stderr, "Error: %s\n", s);
+    // fprintf(stderr, "Error: %s\n", s);
     exit(-1);
 }
 

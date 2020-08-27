@@ -122,9 +122,9 @@ void print_cocos(FILE *fp, int image_id, box *boxes, float **probs, int num_boxe
         float bw = xmax - xmin;
         float bh = ymax - ymin;
 
-        for(j = 0; j < classes; ++j){
-            if (probs[i][j]) fprintf(fp, "{\"image_id\":%d, \"category_id\":%d, \"bbox\":[%f, %f, %f, %f], \"score\":%f},\n", image_id, coco_ids[j], bx, by, bw, bh, probs[i][j]);
-        }
+        // for(j = 0; j < classes; ++j){
+        //     if (probs[i][j]) fprintf(fp, "{\"image_id\":%d, \"category_id\":%d, \"bbox\":[%f, %f, %f, %f], \"score\":%f},\n", image_id, coco_ids[j], bx, by, bw, bh, probs[i][j]);
+        // }
     }
 }
 
@@ -141,7 +141,7 @@ void validate_coco(char *cfgfile, char *weightfile)
         load_weights(&net, weightfile);
     }
     set_batch_network(&net, 1);
-    fprintf(stderr, "Learning Rate: %g, Momentum: %g, Decay: %g\n", net.learning_rate, net.momentum, net.decay);
+    // fprintf(stderr, "Learning Rate: %g, Momentum: %g, Decay: %g\n", net.learning_rate, net.momentum, net.decay);
     srand(time(0));
 
     char *base = "results/";
@@ -158,7 +158,7 @@ void validate_coco(char *cfgfile, char *weightfile)
     char buff[1024];
     snprintf(buff, 1024, "%s/coco_results.json", base);
     FILE *fp = fopen(buff, "w");
-    fprintf(fp, "[\n");
+    // fprintf(fp, "[\n");
 
     box* boxes = (box*)xcalloc(side * side * l.n, sizeof(box));
     float** probs = (float**)xcalloc(side * side * l.n, sizeof(float*));
@@ -192,7 +192,7 @@ void validate_coco(char *cfgfile, char *weightfile)
     }
     time_t start = time(0);
     for(i = nthreads; i < m+nthreads; i += nthreads){
-        fprintf(stderr, "%d\n", i);
+        // fprintf(stderr, "%d\n", i);
         for(t = 0; t < nthreads && i+t-nthreads < m; ++t){
             pthread_join(thr[t], 0);
             val[t] = buf[t];
@@ -223,7 +223,7 @@ void validate_coco(char *cfgfile, char *weightfile)
 #else
     fseek(fp, -2, SEEK_CUR);
 #endif
-    fprintf(fp, "\n]\n");
+    // fprintf(fp, "\n]\n");
     fclose(fp);
 
     if (val) free(val);
@@ -232,7 +232,7 @@ void validate_coco(char *cfgfile, char *weightfile)
     if (buf_resized) free(buf_resized);
     if (thr) free(thr);
 
-    fprintf(stderr, "Total Detection Time: %f Seconds\n", (double)(time(0) - start));
+    // fprintf(stderr, "Total Detection Time: %f Seconds\n", (double)(time(0) - start));
 }
 
 void validate_coco_recall(char *cfgfile, char *weightfile)
@@ -242,7 +242,7 @@ void validate_coco_recall(char *cfgfile, char *weightfile)
         load_weights(&net, weightfile);
     }
     set_batch_network(&net, 1);
-    fprintf(stderr, "Learning Rate: %g, Momentum: %g, Decay: %g\n", net.learning_rate, net.momentum, net.decay);
+    // fprintf(stderr, "Learning Rate: %g, Momentum: %g, Decay: %g\n", net.learning_rate, net.momentum, net.decay);
     srand(time(0));
 
     char *base = "results/comp4_det_test_";
@@ -316,7 +316,7 @@ void validate_coco_recall(char *cfgfile, char *weightfile)
             }
         }
 
-        fprintf(stderr, "%5d %5d %5d\tRPs/Img: %.2f\tIOU: %.2f%%\tRecall:%.2f%%\n", i, correct, total, (float)proposals/(i+1), avg_iou*100/total, 100.*correct/total);
+        // fprintf(stderr, "%5d %5d %5d\tRPs/Img: %.2f\tIOU: %.2f%%\tRecall:%.2f%%\n", i, correct, total, (float)proposals/(i+1), avg_iou*100/total, 100.*correct/total);
 
         //if (fps) free(fps);
         if (id) free(id);
@@ -400,7 +400,7 @@ void run_coco(int argc, char **argv)
 	int ext_output = find_arg(argc, argv, "-ext_output");
 
     if(argc < 4){
-        fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
+        // fprintf(stderr, "usage: %s %s [train/test/valid] [cfg] [weights (optional)]\n", argv[0], argv[1]);
         return;
     }
 

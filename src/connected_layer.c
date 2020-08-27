@@ -153,7 +153,7 @@ connected_layer make_connected_layer(int batch, int steps, int inputs, int outpu
     l.workspace_size = get_connected_workspace_size(l);
 #endif  // CUDNN
 #endif  // GPU
-    fprintf(stderr, "connected                            %4d  ->  %4d\n", inputs, outputs);
+    // fprintf(stderr, "connected                            %4d  ->  %4d\n", inputs, outputs);
     return l;
 }
 
